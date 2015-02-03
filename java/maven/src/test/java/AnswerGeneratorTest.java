@@ -29,13 +29,13 @@ public class AnswerGeneratorTest {
         int number = answerGerator.generateNumber();
         System.out.print(number);
         int[] numberBytes = new int[4];
-
+        int i = 0;
         while(number != 0 ){
-            numberBytes[i] = number%10;
+            numberBytes[i++] = number%10;
             number = number/10;
         }
         int result = 0;
-        for(int i=0; i<4;i++)
+        for(i=0; i<4;i++)
             for(int j=0; j<4; j++) {
                 if (numberBytes[i] == numberBytes[j])
                     result++;
@@ -43,5 +43,16 @@ public class AnswerGeneratorTest {
         assertThat(result).isEqualTo(4);
     }
 
-    
+    @Test
+    public void should_be_random_number(){
+
+        AnswerGenerator answerGerator = new AnswerGenerator();
+
+        int firstNumber = answerGerator.generateNumber();
+        int secondNumber = answerGerator.generateNumber();
+
+        assertThat(firstNumber).isEqualTo(secondNumber);
+    }
+
+
 }
