@@ -21,22 +21,27 @@ public class AnswerGeneratorTest {
 
         assertThat(bitCount).isEqualTo(4);
     }
-/*
+
     @Test
     public void should_each_bit_different(){
         AnswerGenerator answerGerator = new AnswerGenerator();
 
-        int result = answerGerator.generateNumber();
-
+        int number = answerGerator.generateNumber();
+        System.out.print(number);
         int[] numberBytes = new int[4];
-        int i = 0;
 
-        while(result != 0 && i < 4){
-            numberBytes[i] = result%10;
-            result = result/10;
-            i++;
+        while(number != 0 ){
+            numberBytes[i] = number%10;
+            number = number/10;
         }
-
-   */
+        int result = 0;
+        for(int i=0; i<4;i++)
+            for(int j=0; j<4; j++) {
+                if (numberBytes[i] == numberBytes[j])
+                    result++;
+            }
+        assertThat(result).isEqualTo(4);
     }
+
+    
 }
