@@ -27,7 +27,7 @@ public class AnswerGeneratorTest {
         AnswerGenerator answerGerator = new AnswerGenerator();
 
         int number = answerGerator.generateNumber();
-        System.out.print(number);
+        System.out.println(number);
         int[] numberBytes = new int[4];
         int i = 0;
         while(number != 0 ){
@@ -51,7 +51,9 @@ public class AnswerGeneratorTest {
         int firstNumber = answerGerator.generateNumber();
         int secondNumber = answerGerator.generateNumber();
 
-        assertThat(firstNumber).isEqualTo(secondNumber);
+        System.out.println(firstNumber +  " -----  "+secondNumber);
+
+        assertThat(firstNumber).isNotEqualTo(secondNumber);
     }
 
 
