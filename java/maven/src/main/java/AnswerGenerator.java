@@ -4,6 +4,10 @@ import java.util.Random;
  * Created by jason on 2/2/15.
  */
 public class AnswerGenerator {
+    Random random;
+    public AnswerGenerator(Random random) {
+        this.random = random;
+    }
 
     public int generateNumber(){
         Random random = new Random();
@@ -27,6 +31,10 @@ public class AnswerGenerator {
         return getNumberFromBitArray(numberArray);
     }
 
+    private String generateNumberOnce(){
+        StringBuffer sb  = new StringBuffer();
+
+    }
     private int getNumberFromBitArray(int[] bitArray){
         int number = bitArray[0];
         for(int i=1; i<4; i++){

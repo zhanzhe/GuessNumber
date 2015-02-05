@@ -2,56 +2,75 @@
  * Created by jason on 2/2/15.
  */
 import org.junit.Test;
+
+
+import java.util.HashSet;
+import java.util.Random;
+import java.util.Set;
+
 import static org.fest.assertions.api.Assertions.assertThat;
+import static org.junit.Assert.fail;
+import static org.mockito.BDDMockito.given;
+import static org.mockito.Mockito.mock;
 
 public class AnswerGeneratorTest {
 
     @Test
     public void should_return_four_bit_number(){
-        AnswerGenerator answerGenerator = new AnswerGenerator();
+        String result = new AnswerGenerator().generateNumber();
 
-        int result = answerGenerator.generateNumber();
-        System.out.println(result);
-        int bitCount = 0;
-        while (result != 0){
-            result = result/10;
-            bitCount++;
-        }
-        System.out.println(bitCount);
-
-        assertThat(bitCount).isEqualTo(4);
+        assertThat(result.length()).isEqualTo(4);
     }
 
     @Test
-    public void should_each_bit_different(){
-        AnswerGenerator answerGerator = new AnswerGenerator();
+    public void should_generate_number(){
+        String result  = new AnswerGenerator().generateNumber();
 
-        int number = answerGerator.generateNumber();
-        System.out.println(number);
-        int[] numberBytes = new int[4];
-        int i = 0;
-        while(number != 0 ){
-            numberBytes[i++] = number%10;
-            number = number/10;
+        try {
+            Integer.parseInt(result);
+        }catch(NumberFormatException exc){
+            fail("result should be number");
         }
-        int result = 0;
-        for(i=0; i<4;i++)
-            for(int j=0; j<4; j++) {
-                if (numberBytes[i] == numberBytes[j])
-                    result++;
-            }
-        assertThat(result).isEqualTo(4);
+    }
+
+    @Test
+    public void should_genenrate_no_duplicate_number(){
+        String result = new AnswerGenerator().generateNumber();
+
+        for(int i = 0; i < result.length(); i++){
+            assertThat(result.indexOf(result.charAt(i))).isEqualTo(result.lastIndexOf((result.charAt(i))));
+        }
     }
 
     @Test
     public void should_be_random_number(){
 
-        AnswerGenerator answerGerator = new AnswerGenerator();
+        Random random = mock(Random.class);
+        HashSet<String> numberSet = new HashSet<String>();
+        AnswerGenerator answerGenerator = new AnswerGenerator(random);
 
-        int firstNumber = answerGerator.generateNumber();
-        int secondNumber = answerGerator.generateNumber();
+        given(random.nextInt())
+                .willReturn(1,2,3,4)
+                .willReturn(1,2,3,4)
+                .willReturn(2,3,4,5)
+                .willReturn(3,4,5,6);
 
-        System.out.println(firstNumber +  " -----  "+secondNumber);
+        numberSet.add(answerGenerator.generateNumber());
+        numberSet.add(answerGenerator.generateNumber());
+        numberSet.add(answerGenerator.generateNumber());
+        numberSet.add(answerGenerator.generateNumber());
+
+        assertThat(numberSet.size()).isEqualTo(3);
+
+
+
+
+
+
+
+
+
+        System.out.println(firstNumber + " -----  " + secondNumber);
 
         assertThat(firstNumber).isNotEqualTo(secondNumber);
     }
