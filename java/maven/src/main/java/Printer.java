@@ -7,10 +7,6 @@ public class Printer {
 
     private AnswerGenerator answerGenerator;
 
-    public Printer(AnswerGenerator answerGenerator){
-        this.answerGenerator = answerGenerator;
-    }
-
     private String getSucessfullStr() {
         return "Congratulations!";
     }
@@ -39,29 +35,29 @@ public class Printer {
         return "Game Over";
     }
 
-    private String getTryAgainTips(UserInput userInput, String answerTips){
-
-        return answerTips + "\r\n\r\n" + "Please input your number("+ userInput.getGuessCount()+")" ;
+    private String getTryAgainTips(UserInput userInput, String answerTips) {
+        return answerTips + "\r\n\r\n" + "Please input your number(" + userInput.getGuessCount() + "):";
     }
 
-    public String getDisplayStrAccordingToInput(UserInput userInput) {
+    public String getDisplayStrAccordingToInput(UserInput userInput,String answerStr) {
         String inputStr = userInput.getInputStr();
 
-        if(userInput.getGuessCount() == 0){
-            return getGameOverTipsStr();
-        }
         if(checkIsDuplicatedInput(inputStr)){
             return getDuplicateTipsStr();
         }
 
-        String answerStr = answerGenerator.generateNumber();
+        userInput.deduceGuessCount();
+
         String tips = new GuessNumber().GetTips(inputStr, answerStr);
 
         if(tips.equals("4A0B")){
             return getSucessfullStr();
-        }else{
-            userInput.deduceGuessCount();;
-            return getTryAgainTips(userInput, tips);
         }
+
+        if(userInput.getGuessCount() == 0){
+            return getGameOverTipsStr();
+        }
+
+        return getTryAgainTips(userInput, tips);
     }
 }

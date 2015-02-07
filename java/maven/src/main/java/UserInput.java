@@ -9,12 +9,13 @@ import static org.fest.assertions.api.Assertions.fail;
  */
 public class UserInput {
 
-    private static int guessCount = 6;
+    private int guessCount;
     private static BufferedReader br;
     private String inputStr;
 
     public UserInput(){
         br=new BufferedReader(new InputStreamReader(System.in));
+        this.guessCount = 6;
     }
 
     public String getInputStrFromConsole() {
@@ -28,16 +29,6 @@ public class UserInput {
 
     public String getInputStr(){
         return this.inputStr;
-    }
-
-    private boolean check_is_number_duplicated(String inputStr){
-        for(int i = 0; i < inputStr.length(); i++){
-           if(inputStr.indexOf(inputStr.charAt(i)) != inputStr.lastIndexOf(inputStr.charAt(i))){
-                return true;
-            }
-        }
-
-        return false;
     }
 
 
